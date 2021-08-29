@@ -77,7 +77,7 @@ var questions = [
     {
         question: 'If a variable is intended to be used in multiple functions, how must the variable be declared?',
         choices: ['a. from the top of the DOM tree', 'b. in the local scope', 'c. in the global scope', 'd. within a function'],
-        correctAnswer: 'b. a list of properties for a variable'
+        correctAnswer: 'c. in the global scope'
     },
     {
         question: 'What does the property Math.random() do?',
@@ -120,37 +120,45 @@ function startTimer() {
 }
 
 function questionLoop() {
-    currentIndex = Math.floor(Math.random() * questions.length);
+    answerCheck.textContent = '';
     currentQ = questions[currentIndex];
     questionEl.textContent = questions[currentIndex].question;
     answerOne.textContent = questions[currentIndex].choices[0];
     answerTwo.textContent = questions[currentIndex].choices[1];
     answerThree.textContent = questions[currentIndex].choices[2];
     answerFour.textContent = questions[currentIndex].choices[3];
+    currentIndex++;
 
 }
 
 
-
-answerOne.addEventListener("click", checkAnswer),
-    answerTwo.addEventListener("click", checkAnswer),
-    answerThree.addEventListener("click", checkAnswer),
-    answerFour.addEventListener("click", checkAnswer)
+answerOne.addEventListener("click", checkAnswer)
+answerTwo.addEventListener("click", checkAnswer)
+answerThree.addEventListener("click", checkAnswer)
+answerFour.addEventListener("click", checkAnswer)
 
 
 function checkAnswer(e) {
-    if (questions[currentIndex].correctAnswer === e.target.innerText) {
+    e.preventDefault();
+    if (currentQ.correctAnswer === e.target.innerText) {
         answerCheck.textContent = "Correct!";
         secondsLeft += 5;
+        setTimeout(function () {
+            questionLoop();
+        }, 1000)
+
     } else {
-        answerCheck.textContent = "Wrong! The correct answer is " + questions[currentIndex].correctAnswer;
+        answerCheck.textContent = "Wrong! The correct answer is " + currentQ.correctAnswer;
         if (secondsLeft > 10) {
             secondsLeft -= 10;
-            questionLoop();
+            setTimeout(function () {
+                questionLoop();
+            }, 1000)
         } else {
             clearInterval(timeInterval);
             // quizCompleted();
         }
+
     }
 
 
