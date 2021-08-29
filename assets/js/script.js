@@ -156,20 +156,11 @@ function checkAnswer(e) {
             }, 1000)
         } else {
             clearInterval(timeInterval);
-            // quizCompleted();
+            quizCompleted();
         }
 
     }
 
-
-    // if (currentIndex <= questions.length) {
-    //     for (i = 0; i <= questions.length; i++) {
-    //         questionLoop();
-    //     }
-
-    // } else {
-    //     quizCompleted();
-    // }
 }
 
 function quizCompleted() {

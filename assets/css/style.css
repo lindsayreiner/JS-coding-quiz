@@ -37,6 +37,7 @@ h2,
 h3,
 #question {
   font-size: 235%;
+  margin-bottom: 15px;
 }
 
 .hidden,
@@ -49,8 +50,12 @@ h3,
 }
 
 .ansbutton {
-  width: 50%;
-  height: 10vh;
+  /* width: 50%;
+  height: 10vh; */
+  display: flex;
+  align-items: center;
+  width: auto;
+  height: 6vh;
   margin: 12px;
   margin-left: 0px;
 }
@@ -65,10 +70,6 @@ h3,
   width: 20%;
   height: 5vh;
 }
-
-/* #questions-page {
-  width: 100vw;
-} */
 
 #view-highscores {
   width: 10%;
