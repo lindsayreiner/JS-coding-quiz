@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" type="text/css" href="assets\css\style.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Work+Sans&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>JavaScript Quiz</title>
+  </head>
+
+  <body>
+    <header id="header">
+      <button id="view-highscores" class="button">View Highscores</button>
+      <span id="timer" class="countdown">1:00</span>
+    </header>
+
+    <main>
+      <section id="intro-page" class="start-page">
+        <h1 id="title">Coding Quiz Challenge</h1>
+        <p id="instructions">
+          <strong>Instructions:</strong> Try to answer the following
+          code-related questions within the 60 second time limit. Keep an eye on
+          the clock! Wrong answers penalize your score/time by 10 seconds.
+        </p>
+      </section>
+
+      <section id="questions-page" class="section-container hidden">
+        <div id="question">
+          <strong>[Insert question here]</strong>
+        </div>
+        <div id="answers" class="button-container center">
+          <button id="ans1" class="button ansbutton">[Answer 1]</button>
+          <button id="ans2" class="button ansbutton">[Answer 2]</button>
+          <button id="ans3" class="button ansbutton">[Answer 3]</button>
+          <button id="ans4" class="button ansbutton">[Answer 4]</button>
+        </div>
+        <div id="right-wrong">
+          <p id="correct" class="hidden">Correct!</p>
+          <p id="wrong" class="hidden">Wrong!</p>
+        </div>
+      </section>
+
+      <section id="end-quiz" class="section-container hidden">
+        <h2>All done!</h2>
+        <h2 id="final-score">
+          Your final score is: <span id="final-score">[timeleft]</span>!
+        </h2>
+        <form id="highscore-submit">
+          <label
+            >First Name:
+            <input id="player-name" name="submitted-name" autocomplete="name"
+          /></label>
+          <button id="submit-name" class="button">Submit</button>
+        </form>
+      </section>
+
+      <section id="highscores" class="leaderboard section-container hidden">
+        <h3>Highscores</h3>
+        <ol id="leaderboard-list">
+          <li id="hs1" class="highscore-entry"></li>
+          <li id="hs2" class="highscore-entry"></li>
+          <li id="hs3" class="highscore-entry"></li>
+          <li id="hs4" class="highscore-entry"></li>
+          <li id="hs5" class="highscore-entry"></li>
+        </ol>
+        <button id="hs-goback" class="button">Go Back</button>
+        <button id="hs-clear" class="button">Clear Highscores</button>
+      </section>
+    </main>
+    <script src="assets\js\script.js"></script>
+  </body>
+</html>
