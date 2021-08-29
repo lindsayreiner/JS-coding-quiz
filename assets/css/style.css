@@ -97,7 +97,7 @@ button:active {
   transform: translateY(4px);
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 982px) {
   header {
     display: flex;
     flex-direction: column;
@@ -108,7 +108,14 @@ button:active {
     max-width: 25%;
   }
 
+  #view-highscores {
+    width: 30%;
+    height: auto;
+    /* margin-left: 75px; */
+  }
+
   #timer {
+    display: flex;
     flex-direction: column;
   }
 }

@@ -19,8 +19,10 @@
 
   <body>
     <header id="header">
-      <button id="view-highscores" class="button">View Highscores</button>
-      <span id="timer" class="countdown">1:30</span>
+      <button id="view-highscores" class="high-scores button">
+        View Highscores
+      </button>
+      <span id="timer" class="countdown">1:00</span>
     </header>
 
     <main>
@@ -29,7 +31,8 @@
         <p id="instructions">
           <strong>Instructions:</strong> Try to answer the following
           code-related questions within the 60 second time limit. Keep an eye on
-          the clock! Wrong answers penalize your score/time by 10 seconds.
+          the clock! When you answer correctly, you gain 5 seconds/points. When
+          you answer incorrectly, you lose 10 seconds/points.
         </p>
         <br />
         <button id="start-button" class="button">Start Quiz</button>
@@ -45,17 +48,14 @@
           <button id="ans3" class="button ansbutton">[Answer 3]</button>
           <button id="ans4" class="button ansbutton">[Answer 4]</button>
         </div>
-        <div id="right-wrong">
-          <p id="correct" class="hidden">Correct!</p>
-          <p id="wrong" class="hidden">Wrong!</p>
-        </div>
+        <div id="answer-check"></div>
       </section>
 
       <section id="end-quiz" class="section-container hidden">
         <h2>All done!</h2>
-        <h3 id="final-score">
+        <p id="final-score">
           Your final score is: <span id="final-score">[timeleft]</span>!
-        </h3>
+        </p>
         <form id="highscore-submit">
           <label
             >First Name:
