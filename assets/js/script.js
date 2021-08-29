@@ -27,7 +27,7 @@ var savedName = document.getElementById("player-name");
 var goBackBtn = document.getElementById("hs-goback");
 var clearHighscores = document.getElementById("hs-clear");
 
-//Function variables
+//questionLoop function variables
 var currentQ = '';
 var currentIndex = 0;
 
@@ -120,12 +120,16 @@ function startTimer() {
 }
 
 function questionLoop() {
+    currentIndex = Math.floor(Math.random() * questions.length);
+    currentQ = questions[currentIndex];
     questionEl.textContent = questions[currentIndex].question;
     answerOne.textContent = questions[currentIndex].choices[0];
     answerTwo.textContent = questions[currentIndex].choices[1];
     answerThree.textContent = questions[currentIndex].choices[2];
     answerFour.textContent = questions[currentIndex].choices[3];
+
 }
+
 
 
 answerOne.addEventListener("click", checkAnswer),
@@ -134,8 +138,8 @@ answerOne.addEventListener("click", checkAnswer),
     answerFour.addEventListener("click", checkAnswer)
 
 
-function checkAnswer() {
-    if (questions[currentIndex].correctAnswer === questions[currentIndex].choices[answer]) {
+function checkAnswer(e) {
+    if (questions[currentIndex].correctAnswer === e.target.innerText) {
         answerCheck.textContent = "Correct!";
         secondsLeft += 5;
     } else {
@@ -150,14 +154,14 @@ function checkAnswer() {
     }
 
 
-    if (currentIndex <= questions.length) {
-        for (i = 0; i <= questions.length; i++) {
-            questionLoop();
-        }
+    // if (currentIndex <= questions.length) {
+    //     for (i = 0; i <= questions.length; i++) {
+    //         questionLoop();
+    //     }
 
-    } else {
-        quizCompleted();
-    }
+    // } else {
+    //     quizCompleted();
+    // }
 }
 
 function quizCompleted() {
