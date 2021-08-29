@@ -61,6 +61,16 @@ h3,
   margin-left: 76px;
 }
 
+#start-button {
+  width: 20%;
+  height: 5vh;
+}
+
+#view-highscores {
+  width: 10%;
+  height: 5vh;
+}
+
 #correct,
 #wrong {
   text-align: left;
