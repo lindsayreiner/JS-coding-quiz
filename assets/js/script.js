@@ -35,9 +35,9 @@ var currentIndex = 0;
 
 var questions = [
     {
-        question: 'Inside which HTML element do we put the Javascript?',
-        choices: ['a. <js>', 'b. <a>', 'c. <link>', 'd. <script>'],
-        correctAnswer: 'd. <script>'
+        question: 'How does a computer read Javascript code?',
+        choices: ['a. it goes in the order you tell it to go', 'b. bottom up', 'c. it executes functions before it reads anything else', 'd. top down'],
+        correctAnswer: 'd. top down'
     },
     {
         question: 'How do you call a function named helloKitty?',
@@ -58,6 +58,31 @@ var questions = [
         question: 'What is an array?',
         choices: ['a. a declared variable', 'b. a list of properties for a variable', 'c. a global variable', 'd. a flat, circular creature you find in the ocean'],
         correctAnswer: 'b. a list of properties for a variable'
+    },
+    {
+        question: 'Which is NOT an example of a DOM query?',
+        choices: ['a. getElementById()', 'b. querySelector()', 'c. parentNode()', 'd. getElementsByTagName()'],
+        correctAnswer: 'c.parentNode()'
+    },
+    {
+        question: 'What method is used to add a new element to the DOM tree?',
+        choices: ['a. appendChild()', 'b. createTextNode()', 'c. createElement()', 'd. appendDomTree()'],
+        correctAnswer: 'a. appendChild()'
+    },
+    {
+        question: 'What is an NOT an example of an event type?',
+        choices: ['a. keydown', 'b. mouseup', 'c. click', 'd. zoomout'],
+        correctAnswer: 'd. zoomout'
+    },
+    {
+        question: 'If a variable is intended to be used in multiple functions, how must the variable be declared?',
+        choices: ['a. from the top of the DOM tree', 'b. in the local scope', 'c. in the global scope', 'd. within a function'],
+        correctAnswer: 'b. a list of properties for a variable'
+    },
+    {
+        question: 'What does the property Math.random() do?',
+        choices: ['a. picks a random number between 1 and 10', 'b. picks a random number between 0 and 100', 'c. picks a random number between 0 and 1', 'd. picks a random number between the numbers you specify inside the ()'],
+        correctAnswer: 'c.picks a random number between 0 and 1'
     }
 ];
 
@@ -124,21 +149,6 @@ function checkAnswer() {
         }
     }
 
-    // function answerOne() {
-    //     (0);
-    // }
-
-    // function answerTwo() {
-    //     (1);
-    // }
-
-    // function answerThree() {
-    //     (2);
-    // }
-
-    // function answerFour() {
-    //     (3);
-    // }
 
     if (currentIndex <= questions.length) {
         for (i = 0; i <= questions.length; i++) {
@@ -153,6 +163,7 @@ function checkAnswer() {
 function quizCompleted() {
     questionContainer.classList.add('hidden');
     quizEndPage.classList.remove('hidden');
+    endGameScore.textContent = endGameScore;
 }
 
 
