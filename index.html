@@ -20,17 +20,19 @@
   <body>
     <header id="header">
       <button id="view-highscores" class="button">View Highscores</button>
-      <span id="timer" class="countdown">1:00</span>
+      <span id="timer" class="countdown">1:30</span>
     </header>
 
     <main>
-      <section id="intro-page" class="start-page">
+      <section id="intro-page" class="start-page section-container">
         <h1 id="title">Coding Quiz Challenge</h1>
         <p id="instructions">
           <strong>Instructions:</strong> Try to answer the following
           code-related questions within the 60 second time limit. Keep an eye on
           the clock! Wrong answers penalize your score/time by 10 seconds.
         </p>
+        <br />
+        <button id="start-button" class="button">Start Quiz</button>
       </section>
 
       <section id="questions-page" class="section-container hidden">
@@ -51,9 +53,9 @@
 
       <section id="end-quiz" class="section-container hidden">
         <h2>All done!</h2>
-        <h2 id="final-score">
+        <h3 id="final-score">
           Your final score is: <span id="final-score">[timeleft]</span>!
-        </h2>
+        </h3>
         <form id="highscore-submit">
           <label
             >First Name:
@@ -63,7 +65,10 @@
         </form>
       </section>
 
-      <section id="highscores" class="leaderboard section-container hidden">
+      <section
+        id="highscores"
+        class="highscore-history section-container hidden"
+      >
         <h3>Highscores</h3>
         <ol id="leaderboard-list">
           <li id="hs1" class="highscore-entry"></li>

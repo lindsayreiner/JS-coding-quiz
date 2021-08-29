@@ -1,0 +1,104 @@
+*,
+::before,
+::after {
+  box-sizing: border-box;
+  font-family: "Work Sans", sans-serif;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+main {
+  margin: auto;
+  width: 600px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+}
+
+#timer {
+  width: 11vw;
+  font-weight: bolder;
+  padding-left: 85px;
+}
+
+.start-page {
+  display: block;
+  text-align: center;
+}
+
+h1,
+h2,
+h3,
+#question {
+  font-size: 235%;
+}
+
+.hidden,
+#start.hidden {
+  display: none;
+}
+
+.section-container {
+  margin: 60px 0;
+}
+
+.ansbutton {
+  width: 40%;
+  height: 20vh;
+  margin: 20px;
+  margin-left: 0px;
+}
+
+#instructions {
+  padding: 0px;
+  width: 455px;
+  margin-left: 76px;
+}
+
+#correct,
+#wrong {
+  text-align: left;
+  border-bottom: gray 3px solid;
+}
+
+.hs-goback,
+.hs-clear {
+  margin: 100%;
+}
+
+.button {
+  border-radius: 5px;
+  background-color: #b86bd4;
+  color: white;
+  text-align: center;
+}
+
+button:hover {
+  opacity: 60%;
+}
+
+button:active {
+  transform: translateY(4px);
+}
+
+@media screen and (max-width: 600px) {
+  header {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .high-scores {
+    justify-content: center;
+    max-width: 25%;
+  }
+
+  #timer {
+    flex-direction: column;
+  }
+}
