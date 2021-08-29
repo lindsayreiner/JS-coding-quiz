@@ -127,12 +127,12 @@ function questionLoop() {
     answerFour.textContent = questions[currentIndex].choices[3];
 }
 
-var answer = [
-    answerOne.addEventListener("click", checkAnswer),
+
+answerOne.addEventListener("click", checkAnswer),
     answerTwo.addEventListener("click", checkAnswer),
     answerThree.addEventListener("click", checkAnswer),
     answerFour.addEventListener("click", checkAnswer)
-];
+
 
 function checkAnswer() {
     if (questions[currentIndex].correctAnswer === questions[currentIndex].choices[answer]) {
