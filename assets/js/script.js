@@ -5,11 +5,11 @@ var instructionPage = document.getElementById("intro-page");
 var highscoreButton = document.getElementById("view-highscores");
 var timeEl = document.getElementById("timer");
 var startButton = document.getElementById("start-button");
+var highscorePage = document.getElementById("highscores");
 
 //Question page
 var questionContainer = document.getElementById("questions-page");
 var questionEl = document.getElementById("question");
-
 var answerOne = document.getElementById("ans1");
 var answerTwo = document.getElementById("ans2");
 var answerThree = document.getElementById("ans3");
@@ -19,8 +19,8 @@ var answerCheck = document.getElementById("answer-check");
 
 //Quiz end page
 var quizEndPage = document.getElementById("end-quiz");
-var nameSubmission = document.getElementById("submit-name");
-var endGameScore = document.getElementById("final-score");
+var submitName = document.getElementById("submit-name");
+var endGameScore = document.getElementById("end-game-score");
 var savedName = document.getElementById("player-name");
 
 //Highscore page
@@ -62,7 +62,7 @@ var questions = [
     {
         question: 'Which is NOT an example of a DOM query?',
         choices: ['a. getElementById()', 'b. querySelector()', 'c. parentNode()', 'd. getElementsByTagName()'],
-        correctAnswer: 'c.parentNode()'
+        correctAnswer: 'c. parentNode()'
     },
     {
         question: 'What method is used to add a new element to the DOM tree?',
@@ -82,15 +82,28 @@ var questions = [
     {
         question: 'What does the property Math.random() do?',
         choices: ['a. picks a random number between 1 and 10', 'b. picks a random number between 0 and 100', 'c. picks a random number between 0 and 1', 'd. picks a random number between the numbers you specify inside the ()'],
-        correctAnswer: 'c.picks a random number between 0 and 1'
+        correctAnswer: 'c. picks a random number between 0 and 1'
     }
 ];
 
 //Start button event listener
 
+highscoreButton.addEventListener("click", viewHighscores)
 startButton.addEventListener("click", startQuiz);
+goBackBtn.addEventListener("click", function () {
+    highscorePage.classList.add("hidden");
+    instructionPage.classList.remove("hidden");
+})
 
-//Question loop
+function viewHighscores() {
+    instructionPage.classList.add("hidden");
+    questionContainer.classList.add("hidden");
+    quizEndPage.classList.add("hidden");
+    highscorePage.classList.remove("hidden")
+
+}
+
+//Starts questions and timer
 
 function startQuiz() {
     instructionPage.classList.add("hidden");
@@ -109,16 +122,15 @@ function startTimer() {
         if (secondsLeft === 0) {
             // Stops execution of action at set interval
             clearInterval(timerInterval);
-            endGameScore = secondsLeft;
             // question page hides, score screen appears
             questionContainer.classList.add("hidden");
             quizEndPage.classList.remove("hidden");
         }
-
     }, 1000);
 
 }
 
+//Question loop
 function questionLoop() {
     answerCheck.textContent = '';
     currentQ = questions[currentIndex];
@@ -128,7 +140,10 @@ function questionLoop() {
     answerThree.textContent = questions[currentIndex].choices[2];
     answerFour.textContent = questions[currentIndex].choices[3];
     currentIndex++;
-
+    if (currentIndex === 10) {
+        // clearInterval(timerInterval); caused several bugs
+        quizCompleted();
+    }
 }
 
 
@@ -142,7 +157,7 @@ function checkAnswer(e) {
     e.preventDefault();
     if (currentQ.correctAnswer === e.target.innerText) {
         answerCheck.textContent = "Correct!";
-        secondsLeft += 5;
+        secondsLeft += 10;
         setTimeout(function () {
             questionLoop();
         }, 1000)
@@ -155,18 +170,44 @@ function checkAnswer(e) {
                 questionLoop();
             }, 1000)
         } else {
-            clearInterval(timeInterval);
+            clearInterval(timerInterval);
             quizCompleted();
         }
-
     }
-
 }
 
 function quizCompleted() {
     questionContainer.classList.add('hidden');
     quizEndPage.classList.remove('hidden');
-    endGameScore.textContent = endGameScore;
+    endGameScore.textContent = secondsLeft;
+    clearInterval(timerInterval);
+}
+
+//var savedName = document.getElementById("player-name");
+//var submitName = document.getElementById("submit-name");
+//var highscorePage = document.getElementById("highscores")
+
+submitName.addEventListener("click", showHighscores);
+
+if (window.localStorage) {
+    savedName.value = localStorage.getItem('player-name');
+    // console.log(savedName)
+
+    savedName.addEventListener('input', function () {
+        localStorage.setItem('player-name', savedName.value);
+    })
+}
+
+/*var highscoreButton = document.getElementById("view-highscores");
+var highscorePage = document.getElementById("highscores");
+var goBackBtn = document.getElementById("hs-goback");
+var clearHighscores = document.getElementById("hs-clear");*/
+
+function showHighscores() {
+    instructionPage.classList.add("hidden");
+    questionContainer.classList.add("hidden");
+    quizEndPage.classList.add('hidden');
+    highscorePage.classList.remove('hidden');
 }
 
 
