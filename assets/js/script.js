@@ -29,6 +29,11 @@ var highscoreList = document.getElementById("highscore-list");
 
 
 //Highscore page
+var highscoreOne = document.getElementById("hs1");
+var highscoreTwo = document.getElementById("hs2");
+var highscoreThree = document.getElementById("hs3");
+var highscoreFour = document.getElementById("hs4");
+var highscoreFive = document.getElementById("hs5");
 var goBackBtn = document.getElementById("hs-goback");
 var clearHighscores = document.getElementById("hs-clear");
 
@@ -98,6 +103,7 @@ startButton.addEventListener("click", startQuiz);
 goBackBtn.addEventListener("click", function () {
     highscorePage.classList.add("hidden");
     instructionPage.classList.remove("hidden");
+
 })
 
 function viewHighscores() {
@@ -143,7 +149,7 @@ function questionLoop() {
     answerThree.textContent = questions[currentIndex].choices[2];
     answerFour.textContent = questions[currentIndex].choices[3];
     currentIndex++;
-    if (currentIndex === 10) {
+    if (currentIndex === questions.length - 1 || timerEl === 0) {
         clearInterval(timeInterval);
         quizCompleted();
     }
@@ -165,10 +171,6 @@ function checkAnswer(e) {
             questionLoop();
         }, 1000)
 
-
-        // endGameScore.value = localStorage.getItem("end-game-score");
-        // localStorage.setItem('end-game-score', endGameScore.value);
-
     } else {
         answerCheck.textContent = "Wrong! The correct answer is " + currentQ.correctAnswer;
         if (secondsLeft > 10) {
@@ -176,9 +178,9 @@ function checkAnswer(e) {
             setTimeout(function () {
                 questionLoop();
             }, 1000)
-        } else {
-            clearInterval(timeInterval);
-            quizCompleted();
+            // } else {
+            //     clearInterval(timeInterval);
+            //     quizCompleted();
         }
     }
 }
@@ -190,42 +192,25 @@ function quizCompleted() {
     clearInterval(timeInterval);
 }
 
-//var savedName = document.getElementById("player-name");
-//var submitName = document.getElementById("submit-name");
-//var highscorePage = document.getElementById("highscores")
-//var highscoreNames = localStorage.getItem("player-name");
-// var previousScores = localStorage.getItem("")
-//var endGameScore = document.getElementById("end-game-score");
 
 submitName.addEventListener("click", function (event) {
-    if (savedName === '') {
+    // event.preventDefault();
+    secondsLeft.value = localStorage.getItem("");
+    localStorage.setItem('end-game-score', endGameScore.value);
+
+    if ("player-name" === '') {
         alert("You must enter your name to proceed.");
         return;
     };
 
     if (window.localStorage) {
-        savedName.value = localStorage.getItem("player-name");
 
-        savedName.addEventListener('input', function () {
-            localStorage.setItem('player-name', savedName.value);
-        })
-    }
-
-    // endGameScore.value = localStorage.getItem("end-game-score");
-    // localStorage.setItem('end-game-score', endGameScore.value);
-
+        localStorage.setItem('player-name', savedName.value);
+        localStorage.setItem('end-game-score', secondsLeft.toString());
+        showHighscores();
+    };
 });
 
-
-
-
-
-
-/*var highscoreButton = document.getElementById("view-highscores");
-var highscorePage = document.getElementById("highscores");
-var goBackBtn = document.getElementById("hs-goback");
-var clearHighscores = document.getElementById("hs-clear");*/
-//var highscoreList = document.getElementById("highscore-list");
 
 function showHighscores() {
     instructionPage.classList.add("hidden");
@@ -234,7 +219,15 @@ function showHighscores() {
     highscorePage.classList.remove('hidden');
 };
 
-    // function clearHighscores() {
+// var highscoreOne = document.getElementById("hs1");
+// var highscoreTwo = document.getElementById("hs2");
+// var highscoreThree = document.getElementById("hs3");
+// var highscoreFour = document.getElementById("hs4");
+// var highscoreFive = document.getElementById("hs5");
+//var highscoreList = document.getElementById("highscore-list");
 
 
-    // }
+clearHighscores.addEventListener("click", function (event) {
+    localStorage.clear();
+})
+
