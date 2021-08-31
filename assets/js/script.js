@@ -6,6 +6,7 @@ var highscoreButton = document.getElementById("view-highscores");
 var timeEl = document.getElementById("timer");
 var startButton = document.getElementById("start-button");
 var highscorePage = document.getElementById("highscores");
+var timeInterval;
 
 //Question page
 var questionContainer = document.getElementById("questions-page");
@@ -22,6 +23,10 @@ var quizEndPage = document.getElementById("end-quiz");
 var submitName = document.getElementById("submit-name");
 var endGameScore = document.getElementById("end-game-score");
 var savedName = document.getElementById("player-name");
+var highscoreNames = localStorage.getItem("player-name");
+var highscoreList = document.getElementById("highscore-list");
+// var previousScores = localStorage.getItem("")
+
 
 //Highscore page
 var goBackBtn = document.getElementById("hs-goback");
@@ -115,14 +120,12 @@ function startQuiz() {
 var secondsLeft = 60;
 
 function startTimer() {
-    var timerInterval = setInterval(function () {
+    timeInterval = setInterval(function () {
         secondsLeft--;
         timeEl.textContent = secondsLeft;
 
         if (secondsLeft === 0) {
-            // Stops execution of action at set interval
-            clearInterval(timerInterval);
-            // question page hides, score screen appears
+            clearInterval(timeInterval);
             questionContainer.classList.add("hidden");
             quizEndPage.classList.remove("hidden");
         }
@@ -141,7 +144,7 @@ function questionLoop() {
     answerFour.textContent = questions[currentIndex].choices[3];
     currentIndex++;
     if (currentIndex === 10) {
-        // clearInterval(timerInterval); caused several bugs
+        clearInterval(timeInterval);
         quizCompleted();
     }
 }
@@ -162,6 +165,10 @@ function checkAnswer(e) {
             questionLoop();
         }, 1000)
 
+
+        // endGameScore.value = localStorage.getItem("end-game-score");
+        // localStorage.setItem('end-game-score', endGameScore.value);
+
     } else {
         answerCheck.textContent = "Wrong! The correct answer is " + currentQ.correctAnswer;
         if (secondsLeft > 10) {
@@ -170,7 +177,7 @@ function checkAnswer(e) {
                 questionLoop();
             }, 1000)
         } else {
-            clearInterval(timerInterval);
+            clearInterval(timeInterval);
             quizCompleted();
         }
     }
@@ -180,40 +187,54 @@ function quizCompleted() {
     questionContainer.classList.add('hidden');
     quizEndPage.classList.remove('hidden');
     endGameScore.textContent = secondsLeft;
-    clearInterval(timerInterval);
+    clearInterval(timeInterval);
 }
 
 //var savedName = document.getElementById("player-name");
 //var submitName = document.getElementById("submit-name");
 //var highscorePage = document.getElementById("highscores")
+//var highscoreNames = localStorage.getItem("player-name");
+// var previousScores = localStorage.getItem("")
+//var endGameScore = document.getElementById("end-game-score");
 
-submitName.addEventListener("click", showHighscores);
+submitName.addEventListener("click", function (event) {
+    if (savedName === '') {
+        alert("You must enter your name to proceed.");
+        return;
+    };
 
-if (window.localStorage) {
-    savedName.value = localStorage.getItem('player-name');
-    // console.log(savedName)
+    if (window.localStorage) {
+        savedName.value = localStorage.getItem("player-name");
 
-    savedName.addEventListener('input', function () {
-        localStorage.setItem('player-name', savedName.value);
-    })
-}
+        savedName.addEventListener('input', function () {
+            localStorage.setItem('player-name', savedName.value);
+        })
+    }
+
+    // endGameScore.value = localStorage.getItem("end-game-score");
+    // localStorage.setItem('end-game-score', endGameScore.value);
+
+});
+
+
+
+
+
 
 /*var highscoreButton = document.getElementById("view-highscores");
 var highscorePage = document.getElementById("highscores");
 var goBackBtn = document.getElementById("hs-goback");
 var clearHighscores = document.getElementById("hs-clear");*/
+//var highscoreList = document.getElementById("highscore-list");
 
 function showHighscores() {
     instructionPage.classList.add("hidden");
     questionContainer.classList.add("hidden");
     quizEndPage.classList.add('hidden');
     highscorePage.classList.remove('hidden');
-}
+};
+
+    // function clearHighscores() {
 
 
-
-
-
-
-
-
+    // }
