@@ -36,16 +36,16 @@ var currentIndex = 0;
 //Questions array
 
 var questions = [
-    // {
-    //     question: 'Which is NOT an example of a DOM query?',
-    //     choices: ['a. getElementById()', 'b. querySelector()', 'c. parentNode()', 'd. getElementsByTagName()'],
-    //     correctAnswer: 'c. parentNode()'
-    // },
-    // {
-    //     question: 'What method is used to add a new element to the DOM tree?',
-    //     choices: ['a. appendChild()', 'b. createTextNode()', 'c. createElement()', 'd. appendDomTree()'],
-    //     correctAnswer: 'a. appendChild()'
-    // },
+    {
+        question: 'Which is NOT an example of a DOM query?',
+        choices: ['a. getElementById()', 'b. querySelector()', 'c. parentNode()', 'd. getElementsByTagName()'],
+        correctAnswer: 'c. parentNode()'
+    },
+    {
+        question: 'What method is used to add a new element to the DOM tree?',
+        choices: ['a. appendChild()', 'b. createTextNode()', 'c. createElement()', 'd. appendDomTree()'],
+        correctAnswer: 'a. appendChild()'
+    },
     {
         question: 'What is an NOT an example of an event type?',
         choices: ['a. keydown', 'b. mouseup', 'c. click', 'd. zoomout'],
@@ -116,7 +116,7 @@ function turnOffButtons(isActive) {
     }
 }
 
-//Question loop
+//Question loop - checks question index from array, ensures timer is still running, inserts into hardcoded buttons 
 function questionLoop() {
     if (currentIndex > questions.length - 1 || secondsLeft === 0) {
         clearInterval(timeInterval);
@@ -132,7 +132,6 @@ function questionLoop() {
     answerFour.textContent = questions[currentIndex].choices[3];
     turnOffButtons(false);
     currentIndex++;
-
 }
 
 
@@ -143,6 +142,7 @@ answerThree.addEventListener("click", checkAnswer)
 answerFour.addEventListener("click", checkAnswer)
 
 
+//Answer check function, turns off buttons once an answer is clicked, adds 10 secs/points if correct and subtracts 10 if wrong, if timer is less than 10 points and question is wrong the game ends.
 function checkAnswer(e) {
     e.preventDefault();
     turnOffButtons(true);
@@ -168,6 +168,7 @@ function checkAnswer(e) {
     }
 }
 
+
 function quizCompleted() {
     questionContainer.classList.add('hidden');
     quizEndPage.classList.remove('hidden');
@@ -175,12 +176,11 @@ function quizCompleted() {
 
 }
 
-
+//Submit button for high score list- saves name and score in an array and displays it on the high scores page. 
 submitName.addEventListener("click", function (e) {
     e.preventDefault();
 
     var allHighscores = JSON.parse(localStorage.getItem("allHighscores")) || [];
-    console.log(allHighscores)
 
     localStorage.setItem('end-game-score', endGameScore.value);
 
@@ -200,8 +200,7 @@ submitName.addEventListener("click", function (e) {
     localStorage.setItem('allHighscores', JSON.stringify(allHighscores))
 
     showHighscores();
-    // var storedNames = JSON.parse(localStorage.getItem("player-name"));
-    // var storedScores = JSON.parse(localStorage.getItem("end-game-score"));
+
 });
 
 
@@ -214,8 +213,9 @@ function showHighscores() {
     highscoreList.innerHTML = '';
     for (var i = 0; i < allHighscores.length; i++) {
         var listItem = document.createElement('li');
-        listItem.textContent = allHighscores[i].name + '-' + allHighscores[i].score;
+        listItem.textContent = allHighscores[i].name + ' - ' + allHighscores[i].score;
         highscoreList.appendChild(listItem);
+
     }
 };
 

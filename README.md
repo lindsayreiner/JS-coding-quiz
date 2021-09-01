@@ -4,7 +4,7 @@ README Template used: (https://github.com/othneildrew/Best-README-Template/blame
 
 <!-- ABOUT THE PROJECT -->
 
-Live link to the Javascript Quiz:
+Live link to the Javascript Quiz: https://lindsayreiner.github.io/JS-coding-quiz/
 
 <img src="assets\images\Completed Quiz Screenshot.PNG" alt="website-screenshot">
 
