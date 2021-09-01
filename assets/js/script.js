@@ -6,7 +6,7 @@ var highscoreButton = document.getElementById("view-highscores");
 var timeEl = document.getElementById("timer");
 var startButton = document.getElementById("start-button");
 var highscorePage = document.getElementById("highscores");
-var timeInterval;
+var timeInterval = 0;
 
 //Question page
 var questionContainer = document.getElementById("questions-page");
@@ -24,16 +24,8 @@ var submitName = document.getElementById("submit-name");
 var endGameScore = document.getElementById("end-game-score");
 var savedName = document.getElementById("player-name");
 var highscoreList = document.getElementById("highscore-list");
-var highscoreNames = [];
-var savedScores = [];
-
 
 //Highscore page
-var highscoreOne = document.getElementById("hs1");
-var highscoreTwo = document.getElementById("hs2");
-var highscoreThree = document.getElementById("hs3");
-var highscoreFour = document.getElementById("hs4");
-var highscoreFive = document.getElementById("hs5");
 var goBackBtn = document.getElementById("hs-goback");
 var clearHighscores = document.getElementById("hs-clear");
 
@@ -101,6 +93,9 @@ function startQuiz() {
 var secondsLeft = 60;
 
 function startTimer() {
+    currentIndex = 0;
+    timeInterval = 0;
+    secondsLeft = 60;
     timeInterval = setInterval(function () {
         secondsLeft--;
         timeEl.textContent = secondsLeft;
@@ -127,6 +122,7 @@ function questionLoop() {
         clearInterval(timeInterval);
         quizCompleted();
     }
+    if (currentIndex >= questions.length) return;
     answerCheck.textContent = '';
     currentQ = questions[currentIndex];
     questionEl.textContent = questions[currentIndex].question;
@@ -180,9 +176,12 @@ function quizCompleted() {
 }
 
 
-submitName.addEventListener("click", function (event) {
-    event.preventDefault();
-    // secondsLeft.value = localStorage.getItem("");
+submitName.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    var allHighscores = JSON.parse(localStorage.getItem("allHighscores")) || [];
+    console.log(allHighscores)
+
     localStorage.setItem('end-game-score', endGameScore.value);
 
     if (savedName.value === '') {
@@ -191,12 +190,18 @@ submitName.addEventListener("click", function (event) {
 
     };
 
-    if (window.localStorage) {
 
-        localStorage.setItem('player-name', savedName.value);
-        localStorage.setItem('end-game-score', secondsLeft.toString());
-        showHighscores();
+    var highscoresCombined = {
+        name: savedName.value,
+        score: secondsLeft
     };
+
+    allHighscores.push(highscoresCombined);
+    localStorage.setItem('allHighscores', JSON.stringify(allHighscores))
+
+    showHighscores();
+    // var storedNames = JSON.parse(localStorage.getItem("player-name"));
+    // var storedScores = JSON.parse(localStorage.getItem("end-game-score"));
 });
 
 
@@ -205,36 +210,20 @@ function showHighscores() {
     questionContainer.classList.add("hidden");
     quizEndPage.classList.add('hidden');
     highscorePage.classList.remove('hidden');
+    var allHighscores = JSON.parse(localStorage.getItem("allHighscores")) || [];
+    highscoreList.innerHTML = '';
+    for (var i = 0; i < allHighscores.length; i++) {
+        var listItem = document.createElement('li');
+        listItem.textContent = allHighscores[i].name + '-' + allHighscores[i].score;
+        highscoreList.appendChild(listItem);
+    }
 };
 
-// var highscoreOne = document.getElementById("hs1");
-// var highscoreTwo = document.getElementById("hs2");
-// var highscoreThree = document.getElementById("hs3");
-// var highscoreFour = document.getElementById("hs4");
-// var highscoreFive = document.getElementById("hs5");
-//var highscoreList = document.getElementById("highscore-list");
 
-//var highscoreNames = [];
-//var savedScores = [];
-var combinedHighscore = highscoreNames + savedScores;
-console.log(highscoreNames + savedScores);
-
-function init() {
-    // Get stored todos from localStorage
-    var storedNames = JSON.parse(localStorage.getItem("player-name"));
-    var storedScores = JSON.parse(localStorage.getItem("end-game-score"));
-
-    // If todos were retrieved from localStorage, update the todos array to it
-    if (storedTodos !== null) {
-        todos = storedTodos;
-    }
-
-    // This is a helper function that will render todos to the DOM
-    renderTodos();
-}
 
 
 clearHighscores.addEventListener("click", function (event) {
     localStorage.clear();
-})
+    showHighscores();
 
+})
