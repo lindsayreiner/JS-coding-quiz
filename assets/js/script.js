@@ -23,9 +23,9 @@ var quizEndPage = document.getElementById("end-quiz");
 var submitName = document.getElementById("submit-name");
 var endGameScore = document.getElementById("end-game-score");
 var savedName = document.getElementById("player-name");
-var highscoreNames = localStorage.getItem("player-name");
 var highscoreList = document.getElementById("highscore-list");
-// var previousScores = localStorage.getItem("")
+var highscoreNames = [];
+var savedScores = [];
 
 
 //Highscore page
@@ -44,41 +44,41 @@ var currentIndex = 0;
 //Questions array
 
 var questions = [
-    {
-        question: 'How does a computer read Javascript code?',
-        choices: ['a. it goes in the order you tell it to go', 'b. bottom up', 'c. it executes functions before it reads anything else', 'd. top down'],
-        correctAnswer: 'd. top down'
-    },
-    {
-        question: 'How do you call a function named helloKitty?',
-        choices: ['a. function helloKitty() =', 'b. helloKitty()', 'c. call.helloKitty()', 'd. helloKitty.functionCall'],
-        correctAnswer: 'b. helloKitty()'
-    },
-    {
-        question: 'How to write an IF statement for executing some code if "i" is NOT equal to 5?',
-        choices: ['a. if (i > 5)', 'b. if i >= 5', 'c. if (i!=5)', 'd. if i < 6'],
-        correctAnswer: 'c. if (i!=5)'
-    },
-    {
-        question: 'What will the following code return: Boolean(10>9)?',
-        choices: ['a. true', 'b. 1', 'c. false', 'd. undefined'],
-        correctAnswer: 'a. true'
-    },
-    {
-        question: 'What is an array?',
-        choices: ['a. a declared variable', 'b. a list of properties for a variable', 'c. a global variable', 'd. a flat, circular creature you find in the ocean'],
-        correctAnswer: 'b. a list of properties for a variable'
-    },
-    {
-        question: 'Which is NOT an example of a DOM query?',
-        choices: ['a. getElementById()', 'b. querySelector()', 'c. parentNode()', 'd. getElementsByTagName()'],
-        correctAnswer: 'c. parentNode()'
-    },
-    {
-        question: 'What method is used to add a new element to the DOM tree?',
-        choices: ['a. appendChild()', 'b. createTextNode()', 'c. createElement()', 'd. appendDomTree()'],
-        correctAnswer: 'a. appendChild()'
-    },
+    // {
+    //     question: 'How does a computer read Javascript code?',
+    //     choices: ['a. it goes in the order you tell it to go', 'b. bottom up', 'c. it executes functions before it reads anything else', 'd. top down'],
+    //     correctAnswer: 'd. top down'
+    // },
+    // {
+    //     question: 'How do you call a function named helloKitty?',
+    //     choices: ['a. function helloKitty() =', 'b. helloKitty()', 'c. call.helloKitty()', 'd. helloKitty.functionCall'],
+    //     correctAnswer: 'b. helloKitty()'
+    // },
+    // {
+    //     question: 'How to write an IF statement for executing some code if "i" is NOT equal to 5?',
+    //     choices: ['a. if (i > 5)', 'b. if i >= 5', 'c. if (i!=5)', 'd. if i < 6'],
+    //     correctAnswer: 'c. if (i!=5)'
+    // },
+    // {
+    //     question: 'What will the following code return: Boolean(10>9)?',
+    //     choices: ['a. true', 'b. 1', 'c. false', 'd. undefined'],
+    //     correctAnswer: 'a. true'
+    // },
+    // {
+    //     question: 'What is an array?',
+    //     choices: ['a. a declared variable', 'b. a list of properties for a variable', 'c. a global variable', 'd. a flat, circular creature you find in the ocean'],
+    //     correctAnswer: 'b. a list of properties for a variable'
+    // },
+    // {
+    //     question: 'Which is NOT an example of a DOM query?',
+    //     choices: ['a. getElementById()', 'b. querySelector()', 'c. parentNode()', 'd. getElementsByTagName()'],
+    //     correctAnswer: 'c. parentNode()'
+    // },
+    // {
+    //     question: 'What method is used to add a new element to the DOM tree?',
+    //     choices: ['a. appendChild()', 'b. createTextNode()', 'c. createElement()', 'd. appendDomTree()'],
+    //     correctAnswer: 'a. appendChild()'
+    // },
     {
         question: 'What is an NOT an example of an event type?',
         choices: ['a. keydown', 'b. mouseup', 'c. click', 'd. zoomout'],
@@ -139,8 +139,19 @@ function startTimer() {
 
 }
 
+function turnOffButtons(isActive) {
+    var buttons = document.getElementById("answers").children;
+    for (i = 0; i < buttons.length; i++) {
+        buttons[i].disabled = isActive;
+    }
+}
+
 //Question loop
 function questionLoop() {
+    if (currentIndex > questions.length - 1 || secondsLeft === 0) {
+        clearInterval(timeInterval);
+        quizCompleted();
+    }
     answerCheck.textContent = '';
     currentQ = questions[currentIndex];
     questionEl.textContent = questions[currentIndex].question;
@@ -148,12 +159,11 @@ function questionLoop() {
     answerTwo.textContent = questions[currentIndex].choices[1];
     answerThree.textContent = questions[currentIndex].choices[2];
     answerFour.textContent = questions[currentIndex].choices[3];
+    turnOffButtons(false);
     currentIndex++;
-    if (currentIndex === questions.length - 1 || timerEl === 0) {
-        clearInterval(timeInterval);
-        quizCompleted();
-    }
+
 }
+
 
 
 answerOne.addEventListener("click", checkAnswer)
@@ -164,6 +174,8 @@ answerFour.addEventListener("click", checkAnswer)
 
 function checkAnswer(e) {
     e.preventDefault();
+    turnOffButtons(true);
+
     if (currentQ.correctAnswer === e.target.innerText) {
         answerCheck.textContent = "Correct!";
         secondsLeft += 10;
@@ -178,9 +190,9 @@ function checkAnswer(e) {
             setTimeout(function () {
                 questionLoop();
             }, 1000)
-            // } else {
-            //     clearInterval(timeInterval);
-            //     quizCompleted();
+        } else {
+            clearInterval(timeInterval);
+            quizCompleted();
         }
     }
 }
@@ -189,18 +201,19 @@ function quizCompleted() {
     questionContainer.classList.add('hidden');
     quizEndPage.classList.remove('hidden');
     endGameScore.textContent = secondsLeft;
-    clearInterval(timeInterval);
+
 }
 
 
 submitName.addEventListener("click", function (event) {
-    // event.preventDefault();
-    secondsLeft.value = localStorage.getItem("");
+    event.preventDefault();
+    // secondsLeft.value = localStorage.getItem("");
     localStorage.setItem('end-game-score', endGameScore.value);
 
-    if ("player-name" === '') {
+    if (savedName.value === '') {
         alert("You must enter your name to proceed.");
         return;
+
     };
 
     if (window.localStorage) {
@@ -225,6 +238,25 @@ function showHighscores() {
 // var highscoreFour = document.getElementById("hs4");
 // var highscoreFive = document.getElementById("hs5");
 //var highscoreList = document.getElementById("highscore-list");
+
+//var highscoreNames = [];
+//var savedScores = [];
+var combinedHighscore = highscoreNames + savedScores;
+console.log(highscoreNames + savedScores);
+
+function init() {
+    // Get stored todos from localStorage
+    var storedNames = JSON.parse(localStorage.getItem("player-name"));
+    var storedScores = JSON.parse(localStorage.getItem("end-game-score"));
+
+    // If todos were retrieved from localStorage, update the todos array to it
+    if (storedTodos !== null) {
+        todos = storedTodos;
+    }
+
+    // This is a helper function that will render todos to the DOM
+    renderTodos();
+}
 
 
 clearHighscores.addEventListener("click", function (event) {
