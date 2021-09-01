@@ -45,31 +45,6 @@ var currentIndex = 0;
 
 var questions = [
     // {
-    //     question: 'How does a computer read Javascript code?',
-    //     choices: ['a. it goes in the order you tell it to go', 'b. bottom up', 'c. it executes functions before it reads anything else', 'd. top down'],
-    //     correctAnswer: 'd. top down'
-    // },
-    // {
-    //     question: 'How do you call a function named helloKitty?',
-    //     choices: ['a. function helloKitty() =', 'b. helloKitty()', 'c. call.helloKitty()', 'd. helloKitty.functionCall'],
-    //     correctAnswer: 'b. helloKitty()'
-    // },
-    // {
-    //     question: 'How to write an IF statement for executing some code if "i" is NOT equal to 5?',
-    //     choices: ['a. if (i > 5)', 'b. if i >= 5', 'c. if (i!=5)', 'd. if i < 6'],
-    //     correctAnswer: 'c. if (i!=5)'
-    // },
-    // {
-    //     question: 'What will the following code return: Boolean(10>9)?',
-    //     choices: ['a. true', 'b. 1', 'c. false', 'd. undefined'],
-    //     correctAnswer: 'a. true'
-    // },
-    // {
-    //     question: 'What is an array?',
-    //     choices: ['a. a declared variable', 'b. a list of properties for a variable', 'c. a global variable', 'd. a flat, circular creature you find in the ocean'],
-    //     correctAnswer: 'b. a list of properties for a variable'
-    // },
-    // {
     //     question: 'Which is NOT an example of a DOM query?',
     //     choices: ['a. getElementById()', 'b. querySelector()', 'c. parentNode()', 'd. getElementsByTagName()'],
     //     correctAnswer: 'c. parentNode()'
